@@ -1,7 +1,6 @@
 volumes:
   prometheus-data:
   grafana-data:
-  oracle-data:   # new volume for Oracle data persistence
 
 services:
   prometheus:
@@ -32,7 +31,7 @@ services:
 
   app:
     build:
-      context: c:/Users/n_e_i/Downloads/demo/demo
+      context: ${APP_BUILD_CONTEXT}
       dockerfile: Dockerfile
     container_name: my-swaggy-spring-boot-app
     environment:
