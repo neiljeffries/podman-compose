@@ -1,0 +1,64 @@
+volumes:
+  prometheus-data:
+  grafana-data:
+  oracle-data:   # new volume for Oracle data persistence
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+
+  app:
+    build:
+      context: c:/Users/n_e_i/Downloads/demo/demo
+      dockerfile: Dockerfile
+    container_name: my-swaggy-spring-boot-app
+    environment:
+      SPRING_PROFILES_ACTIVE: docker,default
+      MYSQL_HOST: host.containers.internal
+      MYSQL_USER: bob
+      MYSQL_PASSWORD: 8675309
+      REDIS_HOST: host.containers.internal
+      REDIS_PORT: 6379
+      ACTIVEMQ_HOST: host.containers.internal
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m"
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - monitoring
+
+
+networks:
+  monitoring:
+    driver: bridge
