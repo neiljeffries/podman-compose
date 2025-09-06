@@ -38,7 +38,7 @@ services:
       SPRING_PROFILES_ACTIVE: docker,default
       MYSQL_HOST: host.containers.internal
       MYSQL_USER: bob
-      MYSQL_PASSWORD: 8675309
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       REDIS_HOST: host.containers.internal
       REDIS_PORT: 6379
       ACTIVEMQ_HOST: host.containers.internal
