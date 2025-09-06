@@ -9,4 +9,5 @@ scrape_configs:
   - job_name: 'spring-boot-app'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['app:8080']
+      # - targets: ['app:8080'] # Uncomment this line if your java app is running inside podman in the same pod as prometheus
+      - targets: ['172.22.32.1:8080'] # Uncomment this line and replace with your IP if your java app is running outside of podman on Windows host

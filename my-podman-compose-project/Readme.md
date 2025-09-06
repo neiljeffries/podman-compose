@@ -1,13 +1,19 @@
 
 ### PODMAN:
-# Run the below command from the same directory this file is in.
-podman-compose up -d
 
 # Force image rebuild (ignore cache):
 podman-compose build --no-cache app
 
+# Run the below command from the same directory this file is in.
+podman-compose up -d
+
+
 # for podman, use this datasource url in the grafana > prometheus settings
 http://host.containers.internal:9090
+
+
+# Reload Prometheus
+podman-compose restart prometheus
 
 
 
