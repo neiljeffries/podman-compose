@@ -4,136 +4,136 @@
     {
       "label": "Podman: up",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\up.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\up.bat",
       "group": "build",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/up.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/up.bat"
     },
     {
       "label": "Podman: up (with app)",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\up-with-app.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\up-with-app.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/up-with-app.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/up-with-app.bat"
     },
     {
       "label": "Podman: up (external)",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\up-external.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\up-external.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/up-external.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/up-external.bat"
     },
     {
       "label": "Podman: stop",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\stop.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\stop.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/stop.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/stop.bat"
     },
     {
       "label": "Podman: down",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\down.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\down.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/down.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/down.bat"
     },
     {
       "label": "Podman: restart pod",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\restart-pod.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\restart-pod.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/restart-pod.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/restart-pod.bat"
     },
     {
       "label": "Podman: restart containers",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\restart-containers.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\restart-containers.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/restart-containers.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/restart-containers.bat"
     },
     {
       "label": "Podman: rebuild (clean)",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\rebuild-clean.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\rebuild-clean.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/rebuild-clean.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/rebuild-clean.bat"
     },
     {
       "label": "Podman: clean volumes",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\clean-volumes.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\clean-volumes.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/clean-volumes.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/clean-volumes.bat"
     },
     {
       "label": "Podman: build app",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\build-app.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\build-app.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/build-app.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/build-app.bat"
     },
     {
       "label": "Podman: prometheus reload",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\prometheus-reload.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\prometheus-reload.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/prometheus-reload.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/prometheus-reload.bat"
     },
     {
       "label": "Podman: pod status",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\pod-status.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\pod-status.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/pod-status.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/pod-status.bat"
     },
     {
       "label": "Podman: pod logs",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\pod-logs.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\pod-logs.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/pod-logs.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/pod-logs.bat"
     },
     {
       "label": "Podman: logs (compose services)",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\logs.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\logs.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/logs.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/logs.bat"
     },
     {
       "label": "Podman: open UI",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\open-ui.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\open-ui.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/open-ui.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/open-ui.bat"
     },
     {
       "label": "Podman: shell (app)",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\shell-app.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\shell-app.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/shell-app.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/shell-app.bat"
     },
     {
       "label": "Podman: shell (grafana)",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\shell-grafana.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\shell-grafana.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/shell-grafana.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/shell-grafana.bat"
     },
     {
       "label": "Podman: shell (prometheus)",
       "type": "shell",
-      "command": ".\\my-podman-compose-project\\scripts\\shell-prometheus.bat",
+      "command": ".\\my-grafana-prometheus-project\\scripts\\shell-prometheus.bat",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/shell-prometheus.bat"
+      "detail": "Runs my-grafana-prometheus-project/scripts/shell-prometheus.bat"
     },
     {
       "label": "Podman: resolve Windows host IP",
       "type": "shell",
-      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\my-podman-compose-project\\scripts\\resolve-windows-host-ip.ps1",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\my-grafana-prometheus-project\\scripts\\resolve-windows-host-ip.ps1",
       "problemMatcher": [],
-      "detail": "Runs my-podman-compose-project/scripts/resolve-windows-host-ip.ps1"
+      "detail": "Runs my-grafana-prometheus-project/scripts/resolve-windows-host-ip.ps1"
     },
     {
       "label": "Spring: run (local)",
