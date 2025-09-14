@@ -1,0 +1,6 @@
+# Valid no-op Grafana datasources provisioning file to neutralize deprecated file
+apiVersion: 1
+
+# No datasources are defined here; real datasources live in grafana-datasource.yaml
+deleteDatasources: []
+datasources: []

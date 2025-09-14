@@ -138,19 +138,12 @@
     {
         "label": "Spring: run (local)",
         "type": "shell",
-        "command": "cmd /c start \"\" .\\scripts\\mvn-run.bat",
-        "options": {
-            "cwd": "${workspaceFolder:spring-boot-micrometer-docker}"
-        },
+        "command": ".\\my-grafana-prometheus-project\\scripts\\start-spring.bat",
         "isBackground": true,
         "problemMatcher": [
             {
                 "owner": "spring-boot",
-                "pattern": {
-                    "regexp": "a^",
-                    "file": 1,
-                    "message": 1
-                },
+                "pattern": { "regexp": "a^", "file": 1, "message": 1 },
                 "background": {
                     "activeOnStart": true,
                     "beginsPattern": ".*",
@@ -158,7 +151,7 @@
                 }
             }
         ],
-        "detail": "Runs Spring Boot app locally from spring-boot-micrometer-docker"
+        "detail": "Starts Spring app in a new cmd window via start-spring.bat"
     },
     {
         "label": "Dev: start stack + external app",
@@ -172,6 +165,20 @@
             "isDefault": true
         },
         "problemMatcher": []
+    },
+    {
+        "label": "Dev: shutdown all",
+        "type": "shell",
+        "command": ".\\my-grafana-prometheus-project\\scripts\\shutdown-all.bat",
+        "problemMatcher": [],
+        "detail": "Kills local Java on port 8080 then runs podman compose down"
+    },
+    {
+        "label": "Dev: kill local Java (8080)",
+        "type": "shell",
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .\\my-grafana-prometheus-project\\scripts\\kill-local-java.ps1 -Port 8080",
+        "problemMatcher": [],
+        "detail": "Stops local Spring Boot JVM on port 8080 or via PID file"
     }
-]
+  ]
 }

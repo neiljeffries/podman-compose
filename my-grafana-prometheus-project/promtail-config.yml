@@ -1,0 +1,76 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /var/lib/promtail/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # Scrape systemd journal (journald logging) - single job to avoid duplicates
+  - job_name: systemd-journal
+    journal:
+      max_age: 12h
+      labels:
+        job: systemd-journal
+    relabel_configs:
+      - source_labels: ['__journal__hostname']
+        target_label: 'host'
+      # Prefer CONTAINER_NAME -> SYSLOG_IDENTIFIER -> systemd_unit -> job
+      - action: replace
+        source_labels: ['service_name','__journal_fields__CONTAINER_NAME']
+        separator: ';'
+        regex: '^;(.+)$'
+        replacement: '$1'
+        target_label: service_name
+      - action: replace
+        source_labels: ['service_name','__journal__syslog_identifier']
+        separator: ';'
+        regex: '^;(.+)$'
+        replacement: '$1'
+        target_label: service_name
+      - action: replace
+        source_labels: ['service_name','__journal__systemd_unit']
+        separator: ';'
+        regex: '^;(.+)$'
+        replacement: '$1'
+        target_label: service_name
+      - action: replace
+        source_labels: ['service_name','job']
+        separator: ';'
+        regex: '^;(.+)$'
+        replacement: '$1'
+        target_label: service_name
+      # Trim common suffix
+      - action: replace
+        source_labels: ['service_name']
+        regex: '(.+)\.service'
+        replacement: '$1'
+        target_label: service_name
+      # If service_name is '*', blank it then fall back to job
+      - action: replace
+        source_labels: ['service_name']
+        regex: '^\*$'
+        replacement: ''
+        target_label: service_name
+      - action: replace
+        source_labels: ['service_name','job']
+        separator: ';'
+        regex: '^;(.+)$'
+        replacement: '$1'
+        target_label: service_name
+
+  # Scrape Windows-host Spring Boot app logs bind-mounted into the VM
+  - job_name: spring-app-logs
+    pipeline_stages:
+      # Join Java stack traces and multi-line messages under one entry
+      - multiline:
+          firstline: '^(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}|TRACE|DEBUG|INFO|WARN|ERROR)\b'
+    static_configs:
+      - targets: [localhost]
+        labels:
+          job: spring-app-logs
+          service_name: spring-app
+          __path__: /host-logs/spring-app/**/*.log

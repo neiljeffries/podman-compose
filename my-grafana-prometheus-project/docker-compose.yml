@@ -4,6 +4,16 @@ x-podman:
 volumes:
   prometheus-data:
   grafana-data:
+  loki-data:
+  promtail-positions:
+  v_podman_containers_logs:
+    external: true
+  v_journal_var:
+    external: true
+  v_journal_run:
+    external: true
+  v_host_spring_logs:
+    external: true
 
 services:
   prometheus:
@@ -19,18 +29,92 @@ services:
     restart: unless-stopped
     networks:
       - monitoring
+    logging:
+      driver: k8s-file
 
   grafana:
-    image: grafana/grafana-enterprise
+    image: grafana/grafana-enterprise:12.1.1
     container_name: grafana
     ports:
       - "3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
       - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+    environment:
+      # Ensure provisioning paths match our mounts
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_PATHS_PLUGINS=/var/lib/grafana/plugins
+      # Increase log verbosity to debug provisioning issues
+      - GF_LOG_LEVEL=debug
+      # Use unified alerting default datasource UID via grafana.ini; env kept as backup
+      - GF_UNIFIED_ALERTING_DEFAULT_DATA_SOURCE_UID=prom
+      # Remove any implicit preinstall behavior
+      - GF_PLUGINS_PREINSTALL=
+      - GF_INSTALL_PLUGINS=
+      - GF_PLUGINS_PREINSTALL_DISABLED=true
+      # Keep unsigned plugin allowlist (removed grafana-lokiexplore-app)
+      - GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS=grafana-pyroscope-app,grafana-exploretraces-app,grafana-metricsdrilldown-app
+      # Make image think preinstall not forced
+      - GF_INSTALL_PLUGINS_FORCE=false
+    depends_on:
+      - prometheus
+      - loki
     restart: unless-stopped
     networks:
       - monitoring
+    logging:
+      driver: k8s-file
+
+  # Loki log aggregation
+  loki:
+    image: grafana/loki:2.9.7
+    container_name: loki
+    ports:
+      - "3100:3100"
+    command: ["-config.file=/etc/loki/config.yml"]
+    volumes:
+      - loki-data:/loki
+      - ./loki-config.yml:/etc/loki/config.yml:ro,z
+    restart: unless-stopped
+    networks:
+      - monitoring
+    logging:
+      driver: k8s-file
+
+  # Promtail log shipper
+  promtail:
+    image: grafana/promtail:2.9.7
+    container_name: promtail
+    command: ["-config.file=/etc/promtail/config.yml"]
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./promtail-config.yml:/etc/promtail/config.yml:ro
+      - promtail-positions:/var/lib/promtail
+      - v_podman_containers_logs:/var/lib/containers:ro,z
+      - v_journal_var:/var/log/journal:ro,z
+      - v_journal_run:/run/log/journal:ro,z
+      - /etc/machine-id:/etc/machine-id:ro
+      - /home:/host-home:ro,z
+      - /var/home:/host-var-home:ro,z
+      - type: bind
+        source: "C:/DeveloperApps/git/spring-boot-micrometer-docker/logs"
+        target: /host-logs/spring-app
+        read_only: true
+    security_opt:
+      - label=disable
+    user: "0:0"
+    cap_add:
+      - SYS_ADMIN
+      - SYSLOG
+    depends_on:
+      - loki
+    restart: unless-stopped
+    networks:
+      - monitoring
+    logging:
+      driver: k8s-file
 
   app:
     profiles: ["app"]
@@ -46,7 +130,6 @@ services:
       REDIS_HOST: host.containers.internal
       REDIS_PORT: 6379
       ACTIVEMQ_HOST: host.containers.internal
-      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m"
     ports:
       - "8080:8080"
     healthcheck:
@@ -60,6 +143,8 @@ services:
     restart: unless-stopped
     networks:
       - monitoring
+    logging:
+      driver: k8s-file
 
 networks:
   monitoring:

@@ -7,6 +7,4 @@ podman-compose down
 set ERR=%ERRORLEVEL%
 
 popd
-echo.
-pause
 exit /b %ERR%
